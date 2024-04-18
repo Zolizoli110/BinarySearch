@@ -43,9 +43,11 @@ public class OrderItemsHandler
             case SortingMethod.Selection: 
                 Selection();
                 break;
-            case SortingMethod.Bubble: 
+            case SortingMethod.Bubble:
+                throw new NotImplementedException();
                 break;
-            case SortingMethod.Insertion: 
+            case SortingMethod.Insertion:
+                throw new NotImplementedException();
                 break;
         }
     }
@@ -71,5 +73,24 @@ public class OrderItemsHandler
         IComparable tmp = _items[i];
         _items[i] = _items[j];
         _items[j] = tmp;
+    }
+
+    public int BinarySearch(PhoneBookItem value, bool ascending = true)
+    {
+        DefineCmp(ascending);
+        int left = 0;
+        int right = _items.Length - 1;
+        int center = (left + right) / 2;
+
+        while (left <= right && !_items[center].Equals(value))
+        {
+            if (CMP(value, _items[center]))
+                right = center - 1;
+            else
+                left = center + 1;
+            center = (left + right) / 2;
+        }
+
+        return left <= right ? center : -1;
     }
 }
