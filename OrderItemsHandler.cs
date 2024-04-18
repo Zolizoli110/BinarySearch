@@ -1,5 +1,11 @@
 namespace BinarySearch;
 
+public enum SortingMethod
+{
+    Insertion,
+    Bubble,
+    Selection
+}
 public class OrderItemsHandler
 {
     private IComparable[] _items;
@@ -27,5 +33,43 @@ public class OrderItemsHandler
         }
 
         return true;
+    }
+
+    public void Sort(SortingMethod sortingMethod, bool ascending = true)
+    {
+        DefineCmp(ascending);
+        switch (sortingMethod)
+        {
+            case SortingMethod.Selection: 
+                Selection();
+                break;
+            case SortingMethod.Bubble: 
+                break;
+            case SortingMethod.Insertion: 
+                break;
+        }
+    }
+
+    public void Selection()
+    {
+        for (int i = 0; i < _items.Length; i++)
+        {
+            int min = i;
+            for (int j = min + 1; j < _items.Length; j++)
+            {
+                if (CMP(_items[j], _items[i]))
+                {
+                    min = j;
+                }
+            }
+            Swap(i, min);
+        }
+    }
+
+    private void Swap(int i, int j)
+    {
+        IComparable tmp = _items[i];
+        _items[i] = _items[j];
+        _items[j] = tmp;
     }
 }
