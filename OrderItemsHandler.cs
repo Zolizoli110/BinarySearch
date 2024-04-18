@@ -75,7 +75,7 @@ public class OrderItemsHandler
         _items[j] = tmp;
     }
 
-    public int BinarySearch(PhoneBookItem value, bool ascending = true)
+    public int BinarySearchIterated(PhoneBookItem value, bool ascending = true)
     {
         DefineCmp(ascending);
         int left = 0;
@@ -92,5 +92,23 @@ public class OrderItemsHandler
         }
 
         return left <= right ? center : -1;
+    }
+
+    public int BinarySearchRecursion(PhoneBookItem value, bool ascending = true)
+    {
+        DefineCmp(ascending);
+        return Recursion(value, 0, _items.Length - 1);
+    }
+
+    private int Recursion(PhoneBookItem value, int left, int right)
+    {
+        if (left > right) return -1;
+
+        int center = (left + right) / 2;
+        if (_items[center].Equals(value)) return center;
+
+        if (CMP(value, _items[center]))
+            return Recursion(value, left, center - 1);
+        return Recursion(value, center + 1, right);
     }
 }
